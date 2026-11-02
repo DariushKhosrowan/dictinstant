@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://amirhosseineslami.github.io/dictinstant/sitemap.xml
+Sitemap: https://DariushKhosrowan.github.io/dictinstant/sitemap.xml

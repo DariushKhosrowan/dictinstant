@@ -7,8 +7,8 @@ Depends: python3
 Section: education
 Priority: optional
 Filename: ./dictinstant.deb
-Size: 8278
-SHA256: dd575f783ef7cd8426a0f81edf2cdf42a9f4cba4335d45f28b56f80a76975dbb
+Size: 8282
+SHA256: f06cb4f53f3a7c440f0113415364f04e333555b2d97cf561721914d92aa3ff69
 Description: Instant multi-source dictionary definitions, examples and pictures
  Shows many definitions of a word from different free dictionaries at once —
  with example sentences and pictures — so you choose the meaning that clicks.

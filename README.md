@@ -8,7 +8,7 @@
 
 `sudo apt install dictinstant`
 
-[Try the live demo](https://amirhosseineslami.github.io/dictinstant/) · [Website](https://amirhosseineslami.github.io/dictinstant/) · [Install](#install) · [GitHub Releases](https://github.com/amirhosseineslami/dictinstant/releases)
+[Try the live demo](https://DariushKhosrowan.github.io/dictinstant/) · [Website](https://DariushKhosrowan.github.io/dictinstant/) · [Install](#install) · [GitHub Releases](https://github.com/DariushKhosrowan/dictinstant/releases)
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Platform: Linux](https://img.shields.io/badge/platform-Linux-success.svg)
@@ -39,7 +39,7 @@ A single flat definition rarely teaches a word well. Different dictionaries phra
 ### Option 1 — APT (Debian / Ubuntu) — recommended
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/amirhosseineslami/dictinstant/main/scripts/apt-setup.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/DariushKhosrowan/dictinstant/main/scripts/apt-setup.sh | sudo bash
 sudo apt update
 sudo apt install -y dictinstant
 dictinstant
@@ -50,14 +50,14 @@ dictinstant
 ### Option 2 — direct .deb
 
 ```bash
-curl -fsSL https://github.com/amirhosseineslami/dictinstant/releases/latest/download/dictinstant.deb -o /tmp/dictinstant.deb
+curl -fsSL https://github.com/DariushKhosrowan/dictinstant/releases/latest/download/dictinstant.deb -o /tmp/dictinstant.deb
 sudo dpkg -i /tmp/dictinstant.deb
 dictinstant
 ```
 
 ### Option 3 — any browser, no install
 
-Open `site/app/index.html` directly, or use the [live demo](https://amirhosseineslami.github.io/dictinstant/).
+Open `site/app/index.html` directly, or use the [live demo](https://DariushKhosrowan.github.io/dictinstant/).
 
 ## Usage
 
