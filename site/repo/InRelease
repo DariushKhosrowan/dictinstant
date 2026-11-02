@@ -1,0 +1,31 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: dictinstant
+Label: dictinstant
+Suite: stable
+Codename: dictinstant
+Architectures: all
+Components: main
+Description: dictinstant APT repository
+Date: Mon, 02 Nov 2026 23:20:04 UTC
+MD5Sum:
+ 378a33072143f011d65aa0b63c9928d4 532 Packages
+ c87d615b4b63b5769dd66eaf51bd958f 380 Packages.gz
+SHA1:
+ b304f15985c4ea7559ee5d3eeb35884499d45f6a 532 Packages
+ 30635a8d299b640fdffafb8529af3bed99404f28 380 Packages.gz
+SHA256:
+ c9cb7c8761a296c83e7701b382b2217759ab7b0821fd0610a258e9c4f54fc424 532 Packages
+ ec2f090ad21962360600813f23a00203f5c9fd10aa90165441665c9b21409e44 380 Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEmkIOR9m6ilHDw7xhn0PpenWJAKQFAmrpGqQACgkQn0PpenWJ
+AKTg5ggAsA3AqSJ+wOw+oDmEC3q8/wIvkbvf+1nNpMyIo+ryXjyXTV52kayNAoTe
+FIgrUkIE5usGr3XziHLU5FkNOd+Wdbu44OMy2s9xMejqDdaaeKoWH7o5zR6ifcMe
+galFI2jf58zPJ26heYYI+ogc9VBtJVINkC3EEUKMac0XEUeYhxTk7bKeSC0M7zYS
+HX27gtDogd1lTVAc3iTTcYttRiHa494vJ965P+2nyovHNyDDkfUSyph2ckKsTfLP
+ykwdFOvTNZuIUjpAiwB4UAOrgOmHMRkVMihF/BHTkzDYAWWeFFE7qpmlL7DriaZO
+72kICI8C+5A6UrNE2IY2XC/xgXkKTg==
+=b5YR
+-----END PGP SIGNATURE-----

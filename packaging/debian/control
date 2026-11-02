@@ -1,0 +1,17 @@
+Package: dictinstant
+Version: 0.1.0
+Section: education
+Priority: optional
+Architecture: all
+Depends: python3
+Maintainer: Dariush Khosrowan <dariush@khosrowan.ir>
+Description: Instant multi-source dictionary definitions, examples and pictures
+ Shows many definitions of a word from different free dictionaries at once —
+ with example sentences and pictures — so you choose the meaning that clicks.
+ .
+ Features:
+  * Independent definitions from the Free Dictionary API and Wiktionary
+  * Automatic pictures from Wikimedia Commons
+  * Pronunciation audio, examples, part-of-speech
+  * "Choose this" saves meanings to your personal review list
+  * Open source (MIT), uses free data sources

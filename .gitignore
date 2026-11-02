@@ -1,0 +1,13 @@
+# build artifacts
+dist/
+*.deb
+packaging/*.deb
+
+# os / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# test scratch
+/tmp/di-*

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dictinstant — Instant multi-source dictionary definitions, examples &amp; pictures</title>
+<meta name="description" content="Look up a word and see many definitions from different dictionaries at once — with example sentences and pictures — and choose the meaning that clicks. Free and open source.">
+<link rel="canonical" href="https://amirhosseineslami.github.io/dictinstant/app/">
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --ink:#1c2330; --muted:#6a7284;
+    --line:#e6e9f0; --brand:#4f46e5; --brand2:#7c3aed;
+    --ok:#10b981; --warning:#f59e0b; --err:#ef4444;
+    --radius:14px; --shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.06);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.55;
+       -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px 20px 80px}
+  header{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;
+         margin-bottom:20px}
+  header h1{font-size:22px;margin:0;letter-spacing:-.3px}
+  header p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+  .search{display:flex;gap:8px;flex-wrap:wrap}
+  .search input{flex:1;min-width:220px;padding:11px 14px;border:1.5px solid var(--line);
+      border-radius:10px;font-size:15px;background:#fff;outline:none}
+  .search input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,70,229,.15)}
+  .search button{padding:11px 20px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));
+      color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:transform .06s ease}
+  .search button:active{transform:translateY(1px)}
+  .status{margin:6px 0 14px;font-size:13.5px;color:var(--muted);min-height:20px}
+  .status.err{color:var(--err)}
+  .status.load{color:var(--brand)}
+  .loader{display:inline-block;width:13px;height:13px;border:2px solid var(--brand);
+      border-right-color:transparent;border-radius:50%;vertical-align:-2px;margin-right:6px;
+      animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .grid{display:grid;grid-template-columns:1fr 330px;gap:22px;align-items:start}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  #results{display:flex;flex-direction:column;gap:18px}
+  .source{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+      box-shadow:var(--shadow);overflow:hidden}
+  .source-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+  .source-head .logo{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+      font-weight:800;color:#fff;font-size:15px}
+  .source-head h2{font-size:15px;margin:0;font-weight:700}
+  .source-head small{display:block;color:var(--muted);font-size:12px;font-weight:500}
+  .badge{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+      padding:3px 9px;border-radius:999px;background:#eef0ff;color:var(--brand)}
+  .source-body{padding:8px 18px 16px}
+  .pos{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--brand);
+      margin:14px 0 6px;display:flex;align-items:center;gap:6px}
+  .pos::after{content:"";flex:1;height:1px;background:var(--line)}
+  .def-card{border:1.5px solid var(--line);border-radius:11px;padding:11px 14px;margin:8px 0;
+      background:#fbfbfe;transition:border-color .12s, background .12s;position:relative}
+  .def-card:hover{border-color:#c7c9f7}
+  .def-card.chosen{border-color:var(--ok);background:#f0fdf6}
+  .def-text{font-size:15px}
+  .def-ex{margin:6px 0 0;font-style:italic;color:var(--muted);font-size:13.5px}
+  .def-ex b{color:var(--ink);font-weight:600}
+  .def-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+  .btn{font:inherit;font-size:13px;font-weight:600;border:1.5px solid var(--line);background:#fff;
+      color:var(--ink);padding:6px 12px;border-radius:8px;cursor:pointer;transition:all .12s}
+  .btn:hover{border-color:var(--brand);color:var(--brand)}
+  .btn.choose{background:linear-gradient(135deg,var(--brand),var(--brand2));border-color:transparent;
+      color:#fff}
+  .btn.choose:hover{filter:brightness(1.07);color:#fff}
+  .btn.audio{display:inline-flex;align-items:center;gap:6px}
+  .btn.audio svg{width:14px;height:14px}
+
+  .photos{margin-top:16px;border-top:1px dashed var(--line);padding-top:12px}
+  .photos h3{font-size:12.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);
+      margin:0 0 10px;display:flex;align-items:center;gap:6px}
+  .strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+  .thumb{border-radius:10px;overflow:hidden;border:1.5px solid var(--line);aspect-ratio:1/1;
+      background:#eef0f5;display:block;cursor:pointer;text-decoration:none;position:relative;transition:border-color .12s}
+  .thumb:hover{border-color:var(--brand)}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb span{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.55));
+      color:#fff;font-size:10.5px;padding:14px 6px 5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .thumb.warn{display:grid;place-items:center;color:var(--muted);font-size:12px;text-align:center;padding:8px}
+
+  #chosen{position:sticky;top:20px;background:var(--card);border:1px solid var(--line);
+      border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+  #chosen h3{margin:0 0 4px;font-size:15px}
+  #chosen .chosen-sub{color:var(--muted);font-size:12.5px;margin:0 0 12px}
+  #fav-list{display:flex;flex-direction:column;gap:10px;max-height:52vh;overflow:auto}
+  .fav{background:#fbfbfe;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}
+  .fav .word{font-weight:700;font-size:14px}
+  .fav .src{font-size:11px;color:var(--muted)}
+  .fav .txt{font-size:13px;margin-top:4px;color:var(--ink)}
+  .fav .x{float:right;border:none;background:none;color:var(--muted);cursor:pointer;font-size:15px;line-height:1}
+  .fav .x:hover{color:var(--err)}
+  .fav .chosen-src{font-size:11px;font-weight:700;color:var(--ok);text-transform:uppercase;letter-spacing:.4px}
+  #fav-empty{color:var(--muted);font-size:13.5px}
+  .clear{font:inherit;font-size:12.5px;border:none;background:none;color:var(--muted);cursor:pointer;
+      text-decoration:underline}
+  .clear:hover{color:var(--err)}
+
+  .detail{font-size:13px;color:var(--muted);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+  .detail b{color:var(--ink)}
+  footer{margin-top:28px;color:var(--muted);font-size:12.5px;text-align:center}
+
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Multi-Definition Learner</h1>
+      <p>One word · every good definition · you choose what sticks.</p>
+    </div>
+    <form class="search" id="form" autocomplete="off">
+      <input id="q" type="text" placeholder="Type a word… e.g. serendipity" aria-label="Word to look up">
+      <button type="submit">Look up</button>
+    </form>
+  </header>
+
+  <div class="status" id="status" role="status"></div>
+
+  <div class="grid">
+    <div id="results"></div>
+    <aside id="chosen">
+      <h3>My chosen meanings</h3>
+      <p class="chosen-sub">Definitions you picked — saved on this device.</p>
+      <div id="fav-list"><p id="fav-empty">Pick a definition you understand best and it will appear here.</p></div>
+      <button class="clear" id="clearfav" type="button">Clear all</button>
+    </aside>
+  </div>
+
+  <footer>Sources: Free Dictionary API · Wiktionary · Wikimedia Commons (all free &amp; open). Prototype for the multi-source definition learner.</footer>
+</div>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const results=$("#results"), statusEl=$("#status"), form=$("#form"), q=$("#q"),
+      favList=$("#fav-list"), clearBtn=$("#clearfav");
+
+const STATE={};
+const SOURCES={
+  freedict:{label:"Free Dictionary",type:"General",color:"#0ea5e9",logo:"FD"},
+  wiktionary:{label:"Wiktionary",type:"Collaborative",color:"#111827",logo:"W"},
+};
+
+/* ---------- persistence (chosen definitions) ---------- */
+let favs=[];
+try{favs=JSON.parse(localStorage.getItem("dl-favs")||"[]")}catch(e){}
+function saveFavs(){localStorage.setItem("dl-favs",JSON.stringify(favs))}
+function renderFavs(){
+  if(!favs.length){favList.innerHTML='<p id="fav-empty">Pick a definition you understand best and it will appear here.</p>';return}
+  favList.innerHTML=favs.map((f,i)=>`
+    <div class="fav">
+      <button class="x" data-i="${i}" title="Remove" aria-label="Remove">×</button>
+      <div class="word">${esc(f.word)} <span class="chosen-src">chosen</span></div>
+      <div class="src">${esc(f.source)} · ${esc(f.pos)}</div>
+      <div class="txt">${esc(f.text)}</div>
+    </div>`).join("");
+}
+favList.addEventListener("click",e=>{
+  const b=e.target.closest(".x"); if(!b)return;
+  favs.splice(+b.dataset.i,1); saveFavs(); renderFavs();
+});
+clearBtn.addEventListener("click",()=>{favs=[];saveFavs();renderFavs()});
+renderFavs();
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function stripHtml(html){const d=document.createElement("div");d.innerHTML=html||"";return d.textContent||d.innerText||""}
+function setStatus(msg,cls){if(!msg){statusEl.textContent="";statusEl.className="status";return}statusEl.textContent=msg;statusEl.className="status "+(cls||"")}
+function setLoading(on){statusEl.className=on?"status load":"status";if(on)statusEl.innerHTML='<span class="loader"></span>Loading definitions &amp; pictures…'}
+
+/* ---------- data fetching ---------- */
+async function fetchWithRetry(url, attempts = 3, delayMs = 900){
+  for (let i = 1; i <= attempts; i++){
+    try {
+      const r = await fetch(url);
+      if (r.ok) return r;
+      if (i === attempts) throw new Error("http-" + r.status);
+    } catch (e) {
+      if (i === attempts) throw e;
+      await new Promise(res => setTimeout(res, delayMs * i));
+    }
+  }
+}
+
+async function fetchFreeDict(word){
+  const r = await fetchWithRetry(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+  const data = await r.json();
+  const audio=[];
+  const out=[];
+  for(const entry of data){
+    if(entry.phonetics){
+      for(const p of entry.phonetics){ if(p.audio) audio.push(p.audio) }
+    }
+    for(const m of entry.meanings||[]){
+      for(const df of m.definitions||[]){
+        out.push({pos:m.partOfSpeech||"",text:df.definition||"",example:df.example||"",source:"freedict"});
+      }
+    }
+  }
+  if(!out.length) throw new Error("free-empty");
+  return {sections:out,audio};
+}
+
+async function fetchWiktionary(word){
+  const r=await fetch(`https://en.wiktionary.org/api/rest_v1/page/definition/${encodeURIComponent(word)}`);
+  if(!r.ok) throw new Error(r.status===404?"wk-404":"wk-"+r.status);
+  const data=await r.json();
+  const out=[];
+  for(const [lang,entries] of Object.entries(data)){
+    if(lang!=="en"&&lang!=="English") continue;
+    for(const entry of entries){
+      const pos=entry.partOfSpeech||"";
+      for(const def of entry.definitions||[]){
+        const t=stripHtml(typeof def==="object"?def.definition:def).trim();
+        if(t) out.push({pos,text:t,example:"",source:"wiktionary"});
+      }
+    }
+  }
+  if(!out.length) throw new Error("wk-empty");
+  return {sections:out,audio:[]};
+}
+
+async function fetchPhotos(word){
+  try{
+    const url=`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(word)}&gsrnamespace=6&gsrlimit=9&prop=imageinfo&iiprop=url|mime&iiurlwidth=400&format=json&origin=*`;
+    const r=await fetch(url);
+    if(!r.ok) return [];
+    const data=await r.json();
+    const pages=data.query&&data.query.pages?data.query.pages:{};
+    return Object.values(pages)
+      .map(p=>(p.imageinfo&&p.imageinfo[0]?p.imageinfo[0]:{}))
+      .filter(ii=>ii.thumburl&&ii.mime&&ii.mime.startsWith("image/"))
+      .map(ii=>({url:ii.thumburl,full:ii.url||ii.thumburl,title:ii.descriptionurl?"":""}));
+  }catch(e){return[]}
+}
+
+/* ---------- rendering ---------- */
+function renderSourceBlock(name,secs,audio){
+  const s=SOURCES[name];
+  const el=document.createElement("section");
+  el.className="source";
+  el.innerHTML=`
+    <div class="source-head">
+      <div class="logo" style="background:${s.color}">${s.logo}</div>
+      <div><h2>${s.label}</h2><small>${esc(secs.length)} definition${secs.length===1?"":"s"} found</small></div>
+      <span class="badge">${s.type}</span>
+    </div>
+    <div class="source-body" data-body></div>`;
+  const body=el.querySelector("[data-body]");
+  const posGroups={};
+  for(const sec of secs){ (posGroups[sec.pos||"Definition"]=posGroups[sec.pos||"Definition"]||[]).push(sec) }
+  for(const [pos,list] of Object.entries(posGroups)){
+    const g=document.createElement("div");
+    g.innerHTML=`<div class="pos">${esc(pos)}</div>`;
+    for(const sec of list){
+      const card=document.createElement("div");
+      card.className="def-card";
+      card.innerHTML=`
+        <div class="def-text">${esc(sec.text)}</div>
+        ${sec.example?`<div class="def-ex">“${esc(sec.example)}”</div>`:""}
+        <div class="def-actions">
+          <button class="btn choose" type="button">Choose this</button>
+          ${audio.length?`<button class="btn audio" type="button" title="Play pronunciation"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.05A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>Play</button>`:""}
+        </div>`;
+      const choose=card.querySelector(".choose");
+      choose.addEventListener("click",()=>{
+        favs.push({word:STATE.word,source:s.label,pos,text:sec.text});
+        saveFavs(); renderFavs(); card.classList.add("chosen");
+        choose.textContent="✓ Chosen"; choose.disabled=true;
+      });
+      const aud=card.querySelector(".audio");
+      if(aud) aud.addEventListener("click",()=>{ playAudio(audio[0]); });
+      g.appendChild(card);
+    }
+    body.appendChild(g);
+  }
+  return el;
+}
+
+function renderPhotos(photos){
+  if(!photos.length) return null;
+  const wrap=document.createElement("div");
+  wrap.className="photos";
+  wrap.innerHTML=`<h3>🖼️ Images</h3><div class="strip" data-strip></div>`;
+  const strip=wrap.querySelector("[data-strip]");
+  strip.innerHTML=photos.map(p=>`
+    <a class="thumb" href="${esc(p.full)}" target="_blank" rel="noopener">
+      <img loading="lazy" src="${esc(p.url)}" alt="Image related to ${esc(STATE.word)}">
+    </a>`).join("");
+  return wrap;
+}
+
+function playAudio(url){
+  const a=new Audio(url); a.play().catch(()=>{});
+}
+
+/* ---------- main search ---------- */
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const word=q.value.trim().toLowerCase();
+  if(!word) return;
+  setLoading(true); results.innerHTML="";
+  STATE.word=word;
+  try{
+    const [fd,wk,photos]=await Promise.all([
+      fetchFreeDict(word).catch(err=>({error:err.message})),
+      fetchWiktionary(word).catch(err=>({error:err.message})),
+      fetchPhotos(word),
+    ]);
+    const rendered=[];
+    if(!fd.error) rendered.push(renderSourceBlock("freedict",fd.sections,fd.audio));
+    if(!wk.error) rendered.push(renderSourceBlock("wiktionary",wk.sections,wk.audio));
+    const ph=renderPhotos(photos);
+    if(ph) rendered.push(ph);
+    if(!rendered.length){
+      setStatus(`No results found for “${esc(word)}”. Check the spelling or try another word.`,"err");
+      return;
+    }
+    results.append(...rendered);
+    const got=rendered.filter(r=>!r.classList.contains("photos")).length;
+    setStatus(`Found definitions in ${got} source${got===1?"":"s"} for “${esc(word)}”.`);
+  }catch(err){
+    setStatus("Something went wrong while looking that up. Please try again.","err");
+  }
+});
+
+/* initial hint */
+setStatus("Try a word like “serendipity”, “ephemeral”, or “resilience”.");
+</script>
+</body>
+</html>

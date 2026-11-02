@@ -1,0 +1,14 @@
+Package: dictinstant
+Version: 0.1.0
+Architecture: all
+Maintainer: Dariush Khosrowan <dariush@khosrowan.ir>
+Installed-Size: 84
+Depends: python3
+Section: education
+Priority: optional
+Filename: ./dictinstant.deb
+Size: 8278
+SHA256: dd575f783ef7cd8426a0f81edf2cdf42a9f4cba4335d45f28b56f80a76975dbb
+Description: Instant multi-source dictionary definitions, examples and pictures
+ Shows many definitions of a word from different free dictionaries at once —
+ with example sentences and pictures — so you choose the meaning that clicks.

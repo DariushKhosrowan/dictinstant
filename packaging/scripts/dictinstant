@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# dictinstant — instant multi-source dictionary definitions, examples & pictures.
+# Serves the built app locally and opens it in your browser.
+set -euo pipefail
+
+APP_DIR="${DICTINSTANT_APP_DIR:-/usr/share/dictinstant/app}"
+PORT="${DICTINSTANT_PORT:-8123}"
+HOST="${DICTINSTANT_HOST:-127.0.0.1}"
+
+# Prefer python3 http.server (always present with python3) else fall back.
+if command -v python3 >/dev/null 2>&1; then
+  SERVER=(python3 -m http.server "$PORT" --bind "$HOST" --directory "$APP_DIR")
+elif command -v python2 >/dev/null 2>&1; then
+  SERVER=(python2 -m SimpleHTTPServer "$PORT")
+else
+  echo "dictinstant: python3 is required to serve the app." >&2
+  exit 1
+fi
+
+echo "dictinstant: serving $APP_DIR at http://$HOST:$PORT/"
+if command -v xdg-open >/dev/null 2>&1; then
+  ( sleep 0.6; xdg-open "http://$HOST:$PORT/" >/dev/null 2>&1 || true ) &
+fi
+
+exec "${SERVER[@]}"

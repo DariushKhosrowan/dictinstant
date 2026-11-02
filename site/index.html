@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dictinstant — Instant multi-source dictionary definitions, examples &amp; pictures</title>
+<meta name="description" content="dictinstant shows you many definitions of a word from different dictionaries at once — with examples and pictures — so you choose the meaning that clicks for you. One command to install.">
+<meta name="keywords" content="dictionary, definitions, vocabulary, language learning, English dictionary, multi dictionary, word meaning, apt install dictinstant, dictionary app">
+<meta name="author" content="Dariush Khosrowan">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://amirhosseineslami.github.io/dictinstant/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dictinstant">
+<meta property="og:title" content="dictinstant — Every good definition, in one instant">
+<meta property="og:description" content="Many definitions of a word from different dictionaries, with examples and pictures. You choose what sticks. Install in one command.">
+<meta property="og:url" content="https://amirhosseineslami.github.io/dictinstant/">
+<meta property="og:image" content="https://amirhosseineslami.github.io/dictinstant/og-cover.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="dictinstant — Every good definition, in one instant">
+<meta name="twitter:description" content="Many definitions from different dictionaries, with examples and pictures. You choose what sticks.">
+
+<!-- Structured data: SoftwareApplication + FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "dictinstant",
+      "url": "https://amirhosseineslami.github.io/dictinstant/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://amirhosseineslami.github.io/dictinstant/app/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "dictinstant",
+      "operatingSystem": "Linux (Debian/Ubuntu), any modern browser",
+      "applicationCategory": "EducationalApplication",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Look up a word and see many definitions from different free dictionaries at once — with example sentences and pictures — so you choose the meaning that makes sense to you.",
+      "license": "https://opensource.org/licenses/MIT",
+      "url": "https://amirhosseineslami.github.io/dictinstant/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does dictinstant show many definitions instead of one?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because one flat definition rarely teaches a word well. Different dictionaries phrase a meaning differently, and the phrasing that clicks is personal. dictinstant shows several independent definitions side by side so you pick the one that makes it stick."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where do the definitions and pictures come from?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Definitions come from the Free Dictionary API and Wiktionary — two independent, freely licensed sources. Pictures come from Wikimedia Commons. All sources are free and open, and each card names its source."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I install dictinstant?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On Debian/Ubuntu, add our APT repository and run: sudo apt install dictinstant. A direct .deb download is also available from GitHub Releases. The app can also run in any browser with no install at all."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is dictinstant free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. dictinstant is free, open source under the MIT license, and works entirely offline-installable. It uses free data sources."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My chosen definitions — are they saved?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. When you tap 'Choose this' on a definition, it is saved to your device (localStorage) and shown in the My chosen meanings panel, ready for review."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --ink:#161a24; --muted:#5b6372;
+    --line:#e6e9f0; --brand:#4f46e5; --brand2:#7c3aed; --ok:#10b981;
+    --radius:16px; --shadow:0 1px 2px rgba(16,24,40,.05),0 12px 32px rgba(16,24,40,.07);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.6;
+       -webkit-font-smoothing:antialiased}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .container{max-width:1100px;margin:0 auto;padding:0 22px}
+  .topnav{display:flex;align-items:center;gap:20px;padding:18px 0;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.3px}
+  .brand .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand2));
+      display:grid;place-items:center;color:#fff;font-size:15px}
+  .navlinks{margin-left:auto;display:flex;gap:18px;font-weight:600;font-size:14px;color:var(--muted)}
+  .navlinks a{color:var(--muted)}
+  .navlinks a:hover{color:var(--brand);text-decoration:none}
+
+  .hero{text-align:center;padding:56px 0 40px}
+  .hero .pill{display:inline-block;background:#eef0ff;color:var(--brand);font-weight:700;font-size:12.5px;
+      letter-spacing:.4px;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:18px}
+  .hero h1{font-size:clamp(30px,5vw,46px);line-height:1.12;letter-spacing:-1px;margin:0 0 16px}
+  .hero h1 .grad{background:linear-gradient(120deg,var(--brand),var(--brand2));-webkit-background-clip:text;
+      background-clip:text;color:transparent}
+  .hero p.lead{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:680px;margin:0 auto 28px}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;padding:13px 22px;
+      border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);transition:transform .06s}
+  .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-color:transparent}
+  .btn.primary:hover{filter:brightness(1.07);text-decoration:none}
+  .btn:hover{transform:translateY(-1px);text-decoration:none}
+  .btn code{font-size:13px;background:rgba(255,255,255,.18);padding:2px 7px;border-radius:6px}
+  .hero .alt{font-size:13px;color:var(--muted);margin-top:14px}
+  .hero .alt code{background:#eef0f5;padding:1px 6px;border-radius:5px;font-size:12.5px}
+
+  .demo{margin:28px 0 8px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+      box-shadow:var(--shadow);overflow:hidden}
+  .demo-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--line);
+      background:#fbfbfe;font-size:13px;color:var(--muted)}
+  .dots{display:flex;gap:6px}
+  .dots i{width:11px;height:11px;border-radius:50%;display:block}
+  .dots i:nth-child(1){background:#ff5f57}.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
+  .demo-bar span{margin-left:8px}
+  .demo iframe{width:100%;height:520px;border:0;display:block}
+
+  .sections{padding:40px 0}
+  .sec-head{text-align:center;margin-bottom:34px}
+  .sec-head h2{font-size:clamp(24px,3.5vw,32px);letter-spacing:-.5px;margin:0 0 10px}
+  .sec-head p{color:var(--muted);max-width:620px;margin:0 auto}
+
+  .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+  .pillar{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+      box-shadow:var(--shadow)}
+  .pillar .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;
+      margin-bottom:14px}
+  .pillar h3{margin:0 0 8px;font-size:17px}
+  .pillar p{margin:0;color:var(--muted);font-size:14.5px}
+
+  .install{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;
+      box-shadow:var(--shadow);margin-top:26px}
+  .install h2{margin:0 0 6px;font-size:22px}
+  .install .sub{color:var(--muted);font-size:14.5px;margin:0 0 20px}
+  .cmd{background:#0f1420;color:#d7dce8;border-radius:12px;padding:16px 18px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;overflow-x:auto;margin:0 0 14px;line-height:1.7}
+  .cmd .prompt{color:#8b93a7}
+  .cmd .hl{color:#8ef0c2}
+  .method{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:20px 0 8px}
+  .aptlist{margin:0 0 8px;padding-left:20px;color:var(--muted);font-size:14px}
+  .aptlist li{margin:4px 0}
+
+  .faq{max-width:760px;margin:0 auto}
+  .faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:10px 0;padding:16px 18px}
+  .faq summary{cursor:pointer;font-weight:700;font-size:15.5px}
+  .faq details p{margin:10px 0 0;color:var(--muted);font-size:14.5px}
+
+  footer{border-top:1px solid var(--line);margin-top:44px;padding:26px 0 40px;text-align:center;color:var(--muted);font-size:13.5px}
+  footer .links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;font-weight:600}
+  footer .links a{color:var(--muted)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<nav class="container topnav" aria-label="Main">
+  <a class="brand" href="#top"><span class="logo">d</span> dictinstant</a>
+  <div class="navlinks">
+    <a href="#demo">Live demo</a>
+    <a href="#features">Features</a>
+    <a href="#install">Install</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://github.com/amirhosseineslami/dictinstant" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<main id="top">
+  <section class="container hero">
+    <span class="pill">Free · open source · zero setup</span>
+    <h1>Every good definition of a word,<br><span class="grad">in one instant.</span></h1>
+    <p class="lead">dictinstant shows you <strong>many definitions from different dictionaries</strong> at once — with example sentences and pictures — so <em>you</em> choose the meaning that clicks. Just type a word.</p>
+    <div class="cta">
+      <a class="btn primary" href="#demo">Try the live demo</a>
+      <a class="btn" href="#install"><code>sudo apt install dictinstant</code></a>
+    </div>
+    <p class="alt">Or run it in any browser — no install needed. Sources: <strong>Free Dictionary</strong> · <strong>Wiktionary</strong> · <strong>Wikimedia Commons</strong></p>
+  </section>
+
+  <section class="container demo" id="demo" aria-label="Live demo">
+    <div class="demo-bar"><span class="dots"><i></i><i></i><i></i></span><span>dictinstant — live demo</span></div>
+    <iframe src="./app/index.html" title="dictinstant live demo" loading="lazy"></iframe>
+  </section>
+
+  <section class="container sections" id="features">
+    <div class="sec-head">
+      <h2>Built around how you actually learn words</h2>
+      <p>A single flat definition rarely teaches a word well. dictinstant gives you the full picture — and lets you take control.</p>
+    </div>
+    <div class="pillars">
+      <article class="pillar">
+        <div class="ic" style="background:#eef0ff">📚</div>
+        <h3>Many definitions, many dictionaries</h3>
+        <p>Independent definitions from the Free Dictionary and Wiktionary shown side by side — each source named. Different dictionaries phrase the same word differently, and the phrasing that clicks is personal.</p>
+      </article>
+      <article class="pillar">
+        <div class="ic" style="background:#e6f7f0">🖼️</div>
+        <h3>Pictures that fix meaning</h3>
+        <p>Relevant images from Wikimedia Commons load automatically for every word — a concrete visual anchor alongside the text definition.</p>
+      </article>
+      <article class="pillar">
+        <div class="ic" style="background:#fff4e6">💾</div>
+        <h3>You choose what sticks</h3>
+        <p>Tap “Choose this” on any definition and it is saved to your “My chosen meanings” panel — so you build your own personal list of meaning that actually made sense to you.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container" id="install">
+    <div class="install">
+      <h2>Install in one command</h2>
+      <p class="sub">On Debian / Ubuntu, add the dictinstant APT repository and install — done.</p>
+      <div class="cmd"><span class="prompt">$</span> curl -fsSL https://raw.githubusercontent.com/amirhosseineslami/dictinstant/main/scripts/apt-setup.sh | sudo bash<br><span class="prompt">$</span> sudo apt update<br><span class="prompt">$</span> sudo apt install -y <span class="hl">dictinstant</span></div>
+      <div class="cmd"><span class="prompt">$</span> dictinstant   <span style="color:#8b93a7"># opens http://127.0.0.1:8123 in your browser</span></div>
+
+      <div class="method">No APT? Download the package directly</div>
+      <div class="cmd"><span class="prompt">$</span> curl -fsSL https://github.com/amirhosseineslami/dictinstant/releases/latest/download/dictinstant.deb -o /tmp/dictinstant.deb<br><span class="prompt">$</span> sudo dpkg -i /tmp/dictinstant.deb</div>
+
+      <div class="method">Or run in any browser — nothing to install</div>
+      <ul class="aptlist">
+        <li>Use the live demo above, or</li>
+        <li>Open <code>site/app/index.html</code> from the repository directly.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="container sections" id="faq">
+    <div class="sec-head"><h2>Frequently asked questions</h2></div>
+    <div class="faq">
+      <details open><summary>Why does dictinstant show many definitions instead of one?</summary><p>Because one flat definition rarely teaches a word well. Different dictionaries phrase a meaning differently, and the phrasing that clicks is personal. dictinstant shows several independent definitions side by side so you pick the one that makes it stick.</p></details>
+      <details><summary>Where do the definitions and pictures come from?</summary><p>Definitions come from the Free Dictionary API and Wiktionary — two independent, freely licensed sources. Pictures come from Wikimedia Commons. All sources are free and open, and each card names its source.</p></details>
+      <details><summary>How do I install dictinstant?</summary><p>On Debian/Ubuntu, add the APT repository and run <code>sudo apt install dictinstant</code>. A direct .deb download is also available from GitHub Releases. The app can also run in any browser with no install at all.</p></details>
+      <details><summary>Are my chosen definitions saved?</summary><p>Yes. When you tap “Choose this” on a definition, it is saved to your device and shown in the My chosen meanings panel, ready for review — even after you close and reopen the app.</p></details>
+      <details><summary>Is dictinstant free?</summary><p>Yes. dictinstant is free and open source under the MIT license, and relies on free data sources.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="links">
+    <a href="https://github.com/amirhosseineslami/dictinstant" rel="noopener">GitHub</a>
+    <a href="https://github.com/amirhosseineslami/dictinstant/releases" rel="noopener">Releases</a>
+    <a href="https://github.com/amirhosseineslami/dictinstant/blob/main/README.md" rel="noopener">Documentation</a>
+    <a href="https://github.com/amirhosseineslami/dictinstant/blob/main/LICENSE" rel="noopener">MIT License</a>
+  </div>
+  <p>© <span id="yr"></span> Dariush Khosrowan · dictinstant — free &amp; open source. Definitions © their respective open sources.</p>
+</footer>
+<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>
